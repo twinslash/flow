@@ -19,7 +19,7 @@ class window.Flow
     @show(slide)
 
   prev: ->
-    slide = if @slide.prev().index() is -1 then @size() - 1 else @slide.prev()
+    slide = if @slide.prev().index() is -1 then @_size() - 1 else @slide.prev()
     @show(slide)
 
   first: ->
