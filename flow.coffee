@@ -1,4 +1,4 @@
-class Flow
+class window.Flow
   defaultOptions:
     slidesSelector: '> *'
 
