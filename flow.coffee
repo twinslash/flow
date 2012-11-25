@@ -19,14 +19,14 @@ class window.Flow
     @show(slide)
 
   prev: ->
-    slide = if @slide.prev().index() is -1 then @_size() - 1 else @slide.prev()
+    slide = if @slide.prev().index() is -1 then @size() - 1 else @slide.prev()
     @show(slide)
 
   first: ->
     @show(0)
 
   last: ->
-    @show(@_size() - 1)
+    @show(@size() - 1)
 
   prepend: (slideHtml) ->
     @list.prepend(slideHtml)
@@ -53,7 +53,7 @@ class window.Flow
       @next()
     @list.find(@options.slidesSelector).eq(position).remove()
 
-  _size: ->
+  size: ->
     @list.find(@options.slidesSelector).size()
 
   _selectSlideByIndex: (index) ->
