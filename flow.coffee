@@ -30,9 +30,28 @@ class Flow
 
   prepend: (slideHtml) ->
     @list.prepend(slideHtml)
+    @show(@slide)
 
   append: (slideHtml) ->
     @list.append(slideHtml)
+    @show(@slide)
+
+  insert: (position, slideHtml) ->
+    if position is 0
+      @list.find(@options.slidesSelector).eq(position).before(slideHtml)
+    else
+      @list.find(@options.slidesSelector).eq(position - 1).after(slideHtml)
+    @show(@slide)
+
+  replace: (position, slideHtml) ->
+    slide = if position is @slide.index() then position else @slide
+    @list.find(@options.slidesSelector).eq(position).before(slideHtml).remove()
+    @show(slide)
+
+  delete: (position) ->
+    if position is @slide.index()
+      @next()
+    @list.find(@options.slidesSelector).eq(position).remove()
 
   _size: ->
     @list.find(@options.slidesSelector).size()
