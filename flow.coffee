@@ -7,48 +7,48 @@ class window.Flow
     @list = $(listSelector)
     @slide = @list.find(@options.slidesSelector).eq(0)
 
-  show: (slide) =>
+  show: (slide) ->
     if $.isNumeric(slide)
       @_selectSlideByIndex(slide)
     else
       @_selectSlideBySelector(slide)
     @list.find(@options.slidesSelector).hide().filter(@slide).show()
 
-  next: =>
+  next: ->
     slide = if @slide.next().index() is -1 then 0 else @slide.next()
     @show(slide)
 
-  prev: =>
+  prev: ->
     slide = if @slide.prev().index() is -1 then @_size() - 1 else @slide.prev()
     @show(slide)
 
-  first: =>
+  first: ->
     @show(0)
 
-  last: =>
+  last: ->
     @show(@_size() - 1)
 
-  prepend: (slideHtml) =>
+  prepend: (slideHtml) ->
     @list.prepend(slideHtml)
     @show(@slide)
 
-  append: (slideHtml) =>
+  append: (slideHtml) ->
     @list.append(slideHtml)
     @show(@slide)
 
-  insert: (position, slideHtml) =>
+  insert: (position, slideHtml) ->
     if position is 0
       @list.find(@options.slidesSelector).eq(position).before(slideHtml)
     else
       @list.find(@options.slidesSelector).eq(position - 1).after(slideHtml)
     @show(@slide)
 
-  replace: (position, slideHtml) =>
+  replace: (position, slideHtml) ->
     slide = if position is @slide.index() then position else @slide
     @list.find(@options.slidesSelector).eq(position).before(slideHtml).remove()
     @show(slide)
 
-  delete: (position) =>
+  delete: (position) ->
     if position is @slide.index()
       @next()
     @list.find(@options.slidesSelector).eq(position).remove()
