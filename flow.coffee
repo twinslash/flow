@@ -48,10 +48,10 @@ class Flow
     @list.find(@options.slidesSelector).eq(position).before(slideHtml).remove()
     @show(slide)
 
-  delete: (index) ->
-    if index is @slide.index()
+  delete: (position) ->
+    if position is @slide.index()
       @next()
-    @list.find(@options.slidesSelector).eq(index).remove()
+    @list.find(@options.slidesSelector).eq(position).remove()
 
   _size: ->
     @list.find(@options.slidesSelector).size()
