@@ -1,4 +1,4 @@
-class Flow
+class window.Flow
   defaultOptions:
     slidesSelector: '> *'
 
@@ -26,7 +26,7 @@ class Flow
     @show(0)
 
   last: ->
-    @show(@_size() - 1)
+    @show(@size() - 1)
 
   prepend: (slideHtml) ->
     @list.prepend(slideHtml)
@@ -53,7 +53,7 @@ class Flow
       @next()
     @list.find(@options.slidesSelector).eq(position).remove()
 
-  _size: ->
+  size: ->
     @list.find(@options.slidesSelector).size()
 
   _selectSlideByIndex: (index) ->
