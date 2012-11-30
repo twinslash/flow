@@ -49,9 +49,11 @@ class window.Flow
     @show(slide)
 
   delete: (position) ->
-    if position is @slide.index()
-      @next()
+    slide = @slide
+    if position is slide.index()
+      slide = if @slide.next().index() is -1 then 0 else @slide.next()
     @list.find(@options.slidesSelector).eq(position).remove()
+    @show(slide)
 
   size: ->
     @list.find(@options.slidesSelector).size()
