@@ -5,14 +5,17 @@ class window.Flow
   constructor: (listSelector, options) ->
     @options = $.extend {}, @defaultOptions, options
     @list = $(listSelector)
-    @slide = @list.find(@options.slidesSelector).eq(0)
+    @slide = @slides().eq(0)
+
+  slides: ->
+    @list.find(@options.slidesSelector)
 
   show: (slide) ->
     if $.isNumeric(slide)
       @_selectSlideByIndex(slide)
     else
       @_selectSlideBySelector(slide)
-    @list.find(@options.slidesSelector).hide().filter(@slide).show()
+    @slides().hide().filter(@slide).show()
 
   next: ->
     slide = if @slide.next().index() is -1 then 0 else @slide.next()
@@ -38,28 +41,28 @@ class window.Flow
 
   insert: (position, slideHtml) ->
     if position is 0
-      @list.find(@options.slidesSelector).eq(position).before(slideHtml)
+      @slides().eq(position).before(slideHtml)
     else
-      @list.find(@options.slidesSelector).eq(position - 1).after(slideHtml)
+      @slides().eq(position - 1).after(slideHtml)
     @show(@slide)
 
   replace: (position, slideHtml) ->
     slide = if position is @slide.index() then position else @slide
-    @list.find(@options.slidesSelector).eq(position).before(slideHtml).remove()
+    @slides().eq(position).before(slideHtml).remove()
     @show(slide)
 
   delete: (position) ->
     slide = @slide
     if position is slide.index()
       slide = if @slide.next().index() is -1 then 0 else @slide.next()
-    @list.find(@options.slidesSelector).eq(position).remove()
+    @slides().eq(position).remove()
     @show(slide)
 
   size: ->
-    @list.find(@options.slidesSelector).size()
+    @slides().size()
 
   _selectSlideByIndex: (index) ->
-    @slide = @list.find(@options.slidesSelector).eq(index)
+    @slide = @slides().eq(index)
 
   _selectSlideBySelector: (selector) ->
-    @slide = @list.find(@options.slidesSelector).filter(selector)
+    @slide = @slides().filter(selector)
