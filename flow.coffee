@@ -12,14 +12,15 @@ class window.Flow
   # Motion
 
   show: (query) ->
-    @slide = @getSlide(query)
-    @slides().hide().filter(@slide).show()
+    @slide = @_getSlide(query)
+    @slides().hide()
+    @slide.show()
 
   next: ->
-    @show @getNextSlidePosition()
+    @show @_getNextSlidePosition()
 
   prev: ->
-    @show @getPrevSlidePosition()
+    @show @_getPrevSlidePosition()
 
   first: ->
     @show 0
@@ -32,29 +33,28 @@ class window.Flow
   size: ->
     @slides().size()
 
-  getCurrentSlidePosition: (element = @slide) ->
-    slide = element
-    currentIndex = -1
-    $.each @slides(), (index) ->
-      if slide.get(0) is this
-        currentIndex = index
-    currentIndex
+  _getCurrentSlidePosition: (slide = @slide) ->
+    currentPosition = -1
+    $.each @slides(), (index, element) ->
+      if slide.get(0) is element
+        currentPosition = index
+    currentPosition
 
-  getNextSlidePosition: ->
-    currentIndex = @getCurrentSlidePosition()
-    index = if currentIndex + 1 is @size() then 0 else currentIndex + 1
+  _getNextSlidePosition: ->
+    currentPosition = @_getCurrentSlidePosition()
+    if currentPosition + 1 is @size() then 0 else currentPosition + 1
 
-  getPrevSlidePosition: ->
-    currentIndex = @getCurrentSlidePosition()
-    index = if currentIndex is 0 then @size() - 1 else currentIndex - 1
+  _getPrevSlidePosition: ->
+    currentPosition = @_getCurrentSlidePosition()
+    if currentPosition is 0 then @size() - 1 else currentPosition - 1
 
-  getSlide: (query) ->
+  _getSlide: (query) ->
     if $.isNumeric(query)
-      @slide = @slides().eq(query)
+      @slides().eq(query)
     else if toString.call(query) is '[object String]'
-      @slide = @slides().filter(query)
+      @slides().filter(query)
     else
-      @slide = query
+      query
 
   # DOM manipulation
 
@@ -74,13 +74,13 @@ class window.Flow
     @show @slide
 
   replace: (position, slideHtml) ->
-    slide = if @getCurrentSlidePosition() is position then position else @slide
+    slide = if @_getCurrentSlidePosition() is position then position else @slide
     @slides().eq(position).before(slideHtml).remove()
     @show slide
 
   delete: (position) ->
-    if @getCurrentSlidePosition() is position
-      slide = if @size() - 1 is position then 0 else @getCurrentSlidePosition()
+    if @_getCurrentSlidePosition() is position
+      slide = if @size() - 1 is position then 0 else @_getCurrentSlidePosition()
     else
       slide = @slide
     @slides().eq(position).remove()
