@@ -20,8 +20,8 @@ Suppose you have such html:
 ```
 Now you can use Flow to slide it like a pro
 ```coffee
-slider = Flow('.slider') # ready to show children of $('.slider') element
-slider.first() # show first slide
+slider = new Flow '.slider' # ready to show children of $('.slider') element
+# the first slide will be shown automatically
 
 # switch slides by clicks on buttons
 $('.prev-button').on 'click', -> slider.prev()

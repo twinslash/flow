@@ -1,10 +1,12 @@
 class window.Flow
   defaultOptions:
     slidesSelector: '> *'
+    startPosition: 1
 
   constructor: (listSelector, options) ->
     @options = $.extend {}, @defaultOptions, options
     @list = $(listSelector)
+    @show @options.startPosition if $.isNumeric(@options.startPosition)
 
   slides: ->
     @list.find(@options.slidesSelector)
