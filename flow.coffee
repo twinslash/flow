@@ -1,7 +1,7 @@
 class window.Flow
   defaultOptions:
     slidesSelector: '> *'
-    startPosition: 1
+    startPosition: 0
 
   constructor: (listSelector, options) ->
     @options = $.extend {}, @defaultOptions, options
