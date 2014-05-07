@@ -1,16 +1,28 @@
+(function( window ) {
+
 window.Flow = window.Flow || (function() {
 
-	function Flow( slides, startPosition ) {
-		if ( typeof slides === "string" ) {
-			this.slides = [].slice.call( document.querySelectorAll( slides ) );
-		} else {
-			this.slides = slides;
+	function Flow( slides, params ) {
+		var that = this;
+
+		that.params = {
+			startPosition: null
+		};
+
+		for ( var item in params ) {
+			that.params[ item ] = params[ item ];
 		}
 
-		if ( typeof startPosition === "number" ) {
-			this.show( startPosition );
+		if ( typeof slides === 'string' ) {
+			that.slides = window.document.querySelectorAll( slides );
+		} else {
+			that.slides = slides;
 		}
-	}
+
+		if ( typeof that.params.startPosition === 'number' ) {
+			that.show( that.params.startPosition );
+		}
+	};
 
 	var FlowProto = Flow.prototype;
 
@@ -27,11 +39,11 @@ window.Flow = window.Flow || (function() {
 			i = 0;
 
 		for ( ; i < l; i++ ) {
-			this.slides[ i ].style.display = "none";
+			this.slides[ i ].style.display = 'none';
 		}
 
 		// @TODO: Need to set native display value instead of 'block'
-		this.slides[ position ].style.display = "block";
+		this.slides[ position ].style.display = 'block';
 	};
 
 	// Controllers
@@ -61,3 +73,5 @@ window.Flow = window.Flow || (function() {
 	return Flow;
 
 })();
+
+})( this );
