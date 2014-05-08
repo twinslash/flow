@@ -1,5 +1,5 @@
 # Flow
-Flow is simple javascript slider for developers. __Still under development. NOT READY for production.__
+Flow is simple javascript slider for developers.
 
 ## Example
 Suppose you have such html:
@@ -19,22 +19,19 @@ Suppose you have such html:
 <a class="next-button" href="#">Next</a>
 ```
 Now you can use Flow to slide it like a pro
-```coffee
-slider = new Flow '.slider' # ready to show children of $('.slider') element
-# the first slide will be shown automatically
+```js
+var slider = new Flow('.slider li', {
+	startPosition: 0
+});
 
-# switch slides by clicks on buttons
-$('.prev-button').on 'click', -> slider.prev()
-$('.next-button').on 'click', -> slider.next()
+// switch slides by clicks on buttons
+document.querySelector('.next-button').addEventListener('click', slider.next.bind(slider), false);
+document.querySelector('.prev-button').addEventListener('click', slider.prev.bind(slider), false);
 ```
-
-## Dependencies
-* jQuery
 
 ## TODO
 * Write tests
 * Documentation
-* Animation
 
 ## Contribution
 Feel free to fork and pull request.
